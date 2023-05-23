@@ -11,8 +11,30 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Example {
-  id        String   @id @default(cuid())
+model Shop {
+  id String @id @default(cuid())
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  isDisabled Boolean @default(false)
+
+  name     String    @default("")
+  products Product[]
+}
+
+model Product {
+  id String @id @default(cuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  price       Float  @default(0)
+  name        String @default("")
+  description String @default("")
+  image       String @default("")
+  shopId      String
+  shop        Shop   @relation(fields: [shopId], references: [id])
+
+  @@index([shopId])
 }
