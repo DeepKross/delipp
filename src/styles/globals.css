@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    @apply bg-gray-900 text-white;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    @apply text-white font-bold;
+}
+
+p {
+    @apply text-gray-300;
+}
+
+/* Links */
+a {
+    @apply text-blue-400 hover:text-blue-500;
+}
+
+/* Buttons */
+.button {
+    @apply px-4 py-2 bg-blue-500 text-white rounded-lg shadow;
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+textarea {
+    @apply block w-full px-4 py-2 bg-gray-800 text-gray-300 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500;
+}
+
+/* Cards */
+.card {
+    @apply bg-gray-800 text-white rounded-lg shadow-md p-4;
+}
+
+/* Alerts */
+.alert {
+    @apply bg-red-500 text-white p-4 rounded-lg;
+}
+
+/* Navigation */
+.navbar {
+    @apply bg-gray-800 py-4 px-6 flex items-center justify-between;
+}
+
+.navbar-brand {
+    @apply text-white font-bold text-xl;
+}
+
+.navbar-menu {
+    @apply flex space-x-4;
+}
+
+.navbar-link {
+    @apply text-white hover:text-blue-400;
+}
+
+/* Footer */
+.footer {
+    @apply bg-gray-800 py-6 text-white text-center;
+}
