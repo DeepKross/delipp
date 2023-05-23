@@ -1,11 +1,13 @@
 import {useCartStore} from "~/store/useCartStore";
 import {ProductType} from "~/components/Products";
+import NavBar from "~/components/NavBar/NavBar";
 
 export default function Cart( ){
-    const { products, addProduct, removeProduct, removeAllProducts } = useCartStore();
+    const { products, addProduct } = useCartStore();
 
     return (
         <div>
+            <NavBar/>
             <button onClick={() => {
                 let tmp: ProductType = {
                     // add new random product

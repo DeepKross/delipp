@@ -11,30 +11,50 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Shop {
-  id String @id @default(cuid())
+model Order {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  email     String
+  phone     String
+  address   String
+  items     OrderItem[]
+}
 
+model OrderItem {
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  quantity  Int
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
 
-  isDisabled Boolean @default(false)
-
-  name     String    @default("")
-  products Product[]
+  @@index([productId])
+  @@index([orderId])
 }
 
 model Product {
-  id String @id @default(cuid())
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  price       Float  @default(0)
-  name        String @default("")
-  description String @default("")
-  image       String @default("")
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  price       Float       @default(0)
+  name        String      @default("")
+  description String      @default("")
+  image       String      @default("")
   shopId      String
-  shop        Shop   @relation(fields: [shopId], references: [id])
+  shop        Shop        @relation(fields: [shopId], references: [id])
+  orderItems  OrderItem[]
 
   @@index([shopId])
+}
+
+model Shop {
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  isDisabled Boolean   @default(false)
+  name       String    @default("")
+  products   Product[]
 }
