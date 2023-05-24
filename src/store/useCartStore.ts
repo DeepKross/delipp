@@ -24,15 +24,6 @@ interface CartState {
     clearCart: () => void,
 }
 
-
-/*const user = useUser();
-
-let fullName = user.user?.fullName;
-
-if(!fullName){
-    fullName = "Invalid Username while authorization"
-}*/
-
 // Store creator function
 const useCartStore = create<CartState>()(
     persist(immer(
