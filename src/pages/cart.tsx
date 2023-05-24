@@ -14,25 +14,20 @@ const Cart = () => {
         removeItem(product);
     }
 
-    const handleOrderPlaced = async () => {
-        try {
-            await mutate(
-                {
-                    name: user.name,
-                    email: user.email,
-                    phone: user.phone,
-                    address: user.address,
-                    items: cartItems.map((item) => ({
-                        productId: item.product.id,
-                        quantity: item.quantity
-                    }))
-                }
-            )
-            console.log('Order placed successfully')
-        } catch (error) {
-            console.error('Failed to place order:', error);
-            alert('Failed to place order. Please try again.');
-        }
+    const handleOrderPlaced = () => {
+
+        mutate(
+            {
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                address: user.address,
+                items: cartItems.map((item) => ({
+                    productId: item.product.id,
+                    quantity: item.quantity
+                }))
+            }
+        )
     }
 
 
@@ -66,7 +61,7 @@ const Cart = () => {
 
             <h3>Cart Items</h3>
             {cartItems && cartItems.map((item) => (
-                <div key={item.product.id} >
+                <div key={item.product.id}>
                     <CardComponent product={item.product}/>
                     <div>Number of orders - {item.quantity}</div>
                     <button

@@ -54,7 +54,7 @@ const Products = () => {
 
                     <div className="flex flex-col">
                         {products && products.data?.map((product) => (
-                            <CardComponent
+                            <CardComponent key={product.id}
                                 product={product}
                             />
                         ))}
