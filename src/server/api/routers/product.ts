@@ -2,9 +2,6 @@ import z from "zod";
 
 import {createTRPCRouter, publicProcedure} from "~/server/api/trpc";
 
-const getByShopInput = z.object({
-    shopId: z.string(),
-});
 
 export const productRouter = createTRPCRouter({
         getAll: publicProcedure.query(({ctx}) => {
