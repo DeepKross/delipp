@@ -6,7 +6,7 @@ const UserWizard = () => {
 
     if (user.isSignedIn) {
         return (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 ">
                 <p className="text-lg text-blue-400">Hi, {user.user.fullName}</p>
                 <div className="rounded-full overflow-hidden">
                     <img src={user.user.profileImageUrl} alt="profile image" className="h-12 w-12 rounded-full"/>
