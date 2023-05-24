@@ -46,7 +46,6 @@ const Cart = () => {
     const [phone, setPhone] = React.useState('')
     const [address, setAddress] = React.useState('')
 
-
     return (
         <div>
             <NavBar/>
