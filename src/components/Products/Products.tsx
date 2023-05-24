@@ -4,26 +4,31 @@ import {DefaultSkeleton, ListSkeleton} from "~/components/Skeletons/Skeletons";
 import {type inferRouterOutputs} from "@trpc/server";
 import {AppRouter} from "~/server/api/root";
 import CardComponent from "~/components/Products/CardComponent/CardComponent";
+import useCartStore from "~/store/useCartStore";
 
 
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
 export type ProductType = RouterOutput["products"]["getAll"][0];
+export type ShopType = RouterOutput["products"]["getShops"][0];
 
 const Products = () => {
     const [selectedShop, setSelectedShop] = useState("");
     const products = api.products.getByShop.useQuery({shopId: selectedShop});
     const shops = api.products.getShops.useQuery();
+    const {shopId} = useCartStore();
 
     if (shops.isLoading) return (<DefaultSkeleton/>);
     if (shops.isError) return <div>Error: {shops.error.message}</div>;
+
+    //console.log(selectedShop);
 
     return (
         <main className="flex justify-center h-screen">
             <div className="w-full  md:max-w-4xl md:border-x-2 ">
                 <div className="flex justify-center">
                     <h1 className="content-center text-3xl md:text-6xl font-bold text-transparent bg-clip-text
-                         bg-gradient-to-r from-purple-500 to-pink-500">Delipp</h1>
+                         bg-gradient-to-r from-purple-500 to-pink-500">DELIPP</h1>
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="countries" className="block mb-2 text-xl p-4 font-medium text-gray-900 dark:text-white">Select
@@ -34,12 +39,18 @@ const Products = () => {
                         onChange={event => setSelectedShop(event.target.value)}
                         className="bg-gray-50 m-4 border border-gray-300 text-gray-900 text-lg  rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                        <option value="">Select a shop</option>
-                        {shops.data.map(shop => (
+                        <option value="" disabled={true} >Select a shop...</option>
+
+                        { (shopId === null) && shops.data.map(shop => (
                             <option key={shop.id} value={shop.id}>
                                 {shop.name}
                             </option>
                         ))}
+
+                        { (shopId !== null) && //render option with id of shopId
+                            <option key={shopId} value={shopId}>
+                                {shops.data.find(shop => shop.id === shopId)?.name}
+                            </option>}
                     </select>
 
                     {products.isFetching && <ListSkeleton/>}
@@ -55,7 +66,7 @@ const Products = () => {
                     <div className="flex flex-col">
                         {products && products.data?.map((product) => (
                             <CardComponent key={product.id}
-                                product={product}
+                                product={product} shopId={selectedShop}
                             />
                         ))}
                     </div>
