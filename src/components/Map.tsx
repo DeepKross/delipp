@@ -46,6 +46,7 @@ export default function SimpleMap(){
                 {
                     shops.data?.map((shop: ShopType) => (
                         <MarkerComponent
+                            key={shop.id}
                             lat={shop.latitude}
                             lng={shop.longitude}
                             text={shop.name}
