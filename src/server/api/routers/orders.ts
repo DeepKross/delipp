@@ -4,9 +4,9 @@ import {createTRPCRouter, publicProcedure} from "~/server/api/trpc";
 
 const orderInput = z.object({
     name: z.string(),
-    email: z.string(),
-    phone: z.string(),
-    address: z.string(),
+    email: z.string().email().trim(),
+    phone: z.string().min(10).trim(),
+    address: z.string().min(1).trim(),
     items: z.array(
         z.object({
             productId: z.string(),

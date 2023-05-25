@@ -9,7 +9,17 @@ import {useUser} from "@clerk/nextjs";
 const Cart = () => {
     const {cartItems, removeItem, clearCart} = useCartStore();
 
-    const {mutate} = api.orders.create.useMutation();
+    const {mutate, isLoading} = api.orders.create.useMutation({
+        onSuccess: () => {
+            clearCart();
+            setEmail('');
+            setPhone('');
+            setAddress('');
+        },
+        onError: (error) => {
+            console.log(error);
+        }
+    });
 
     const handleDeleteFromCart = (product: ProductType) => {
         removeItem(product);
@@ -36,10 +46,7 @@ const Cart = () => {
                 }))
             }
         )
-        clearCart();
-        setEmail('');
-        setPhone('');
-        setAddress('');
+
     }
 
     const [email, setEmail] = React.useState('')
@@ -53,15 +60,16 @@ const Cart = () => {
             <div>
                 <h3>User Info</h3>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                     type="text"
-                    placeholder="Phone"
+                    placeholder="Phone ex. 0971234567"
                     value={phone}
+                    minLength={10}
                     onChange={(e) => setPhone(e.target.value)}
 
                 />
@@ -69,6 +77,7 @@ const Cart = () => {
                     type="text"
                     placeholder="Address"
                     value={address}
+                    minLength={1}
                     onChange={(e) => setAddress(e.target.value)}
                 />
             </div>
@@ -86,7 +95,7 @@ const Cart = () => {
             ))}
 
             {cartItems.length === 0 && <div>Cart is empty</div>}
-            {cartItems.length !== 0 && <button
+            {cartItems.length !== 0 && <button disabled={isLoading}
                 className="m-8 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                 onClick={(e) => handleOrderPlaced()}>Place Order
             </button>
