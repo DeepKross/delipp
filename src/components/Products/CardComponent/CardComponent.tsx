@@ -1,5 +1,6 @@
 import {ProductType} from "~/components/Products/Products";
 import useCartStore from "~/store/useCartStore";
+import {useRouter} from "next/router";
 
 
 interface CardComponentProps {
@@ -9,9 +10,13 @@ interface CardComponentProps {
 
 const CardComponent = (props: CardComponentProps) => {
 
+    const router = useRouter();
+
     const {addItem} = useCartStore();
     const handleAddToCart = (product: ProductType) => {
         addItem(product, props.shopId);
+        if(router.pathname !== '/cart'){router.push('/cart');}
+
     };
 
     return (

@@ -5,7 +5,7 @@ const NavBar = () => {
     return(
         <>
 
-            <nav className="bg-white border-gray-200 dark:bg-gray-900">
+            <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <Link href={`/`} className="flex items-center">
                         <img src="https://www.ikea.com/images/pictogram-of-a-parcel-and-a-truck-6086b2d89492fe83cb3c8c20b1657f31.jpg?f=s" className="h-8 mr-3" alt="Flowbite Logo" />

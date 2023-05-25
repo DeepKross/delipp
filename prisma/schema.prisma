@@ -57,6 +57,8 @@ model Shop {
   updatedAt  DateTime  @updatedAt
   isDisabled Boolean   @default(false)
   address    String    @default("")
+  longitude  Float     @default(0)
+  latitude   Float     @default(0)
   name       String    @default("")
   products   Product[]
 }
