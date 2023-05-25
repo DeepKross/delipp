@@ -1,6 +1,7 @@
 import {ProductType} from "~/components/Products/Products";
 import useCartStore from "~/store/useCartStore";
 import {useRouter} from "next/router";
+import toast from "react-hot-toast";
 
 
 interface CardComponentProps {
@@ -15,7 +16,7 @@ const CardComponent = (props: CardComponentProps) => {
     const {addItem} = useCartStore();
     const handleAddToCart = (product: ProductType) => {
         addItem(product, props.shopId);
-        if(router.pathname !== '/cart'){router.push('/cart');}
+        toast.success('Added to cart')
 
     };
 

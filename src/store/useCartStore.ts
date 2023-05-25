@@ -49,10 +49,9 @@ const useCartStore = create<CartState>()(
                                 product: productItem,
                                 quantity: 1,
                             });
-                            if(shopId !== `noChangeRequired`)
-                            {
-                                state.shopId = shopId;
-                            }
+
+                            state.shopId = shopId;
+
                         }
                     }),
                 removeItem: (productItem: ProductType) =>
@@ -70,7 +69,7 @@ const useCartStore = create<CartState>()(
                         } else {
                             existingItem.quantity -= 1;
                         }
-                        if(state.cartItems.length === 0){
+                        if (state.cartItems.length === 0) {
                             state.shopId = null;
                         }
                     }),

@@ -6,6 +6,8 @@ import {ProductType} from "~/components/Products/Products";
 import {api} from "~/utils/api";
 import {useUser} from "@clerk/nextjs";
 import SimpleMap from "~/components/Map";
+import Layout from "~/components/Layout/Layout";
+import toast from "react-hot-toast";
 
 const Cart = () => {
     const {cartItems, removeItem, clearCart} = useCartStore();
@@ -16,6 +18,7 @@ const Cart = () => {
             setEmail('');
             setPhone('');
             setAddress('');
+            toast.success("Order placed successfully")
         },
         onError: (error) => {
             console.log(error);
@@ -24,6 +27,7 @@ const Cart = () => {
 
     const handleDeleteFromCart = (product: ProductType) => {
         removeItem(product);
+        toast.error("Item removed from cart")
     }
 
     const user = useUser();
@@ -55,9 +59,9 @@ const Cart = () => {
     const [address, setAddress] = React.useState('')
 
     return (
+        <Layout title="Cart">
         <div className="flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
-            <NavBar/>
-                <SimpleMap/>
+            <SimpleMap/>
 
             <h1 className="m-4 mt-14 text-5xl md:text-6xl lg:text-7xl font-extrabold text-center text-blue-600 dark:text-blue-400">Cart</h1>
 
@@ -135,6 +139,7 @@ const Cart = () => {
                                                className="m-8 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                                                onClick={(e) => handleOrderPlaced()}>Place Order</button>}
         </div>
+        </Layout>
     );
 }
 
