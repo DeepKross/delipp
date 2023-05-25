@@ -5,19 +5,10 @@ import React from "react";
 import {ProductType} from "~/components/Products/Products";
 import {api} from "~/utils/api";
 import {useUser} from "@clerk/nextjs";
-import Map, {Marker} from "react-map-gl"
-import {DefaultSkeleton} from "~/components/Skeletons/Skeletons";
-import {inferRouterOutputs} from "@trpc/server";
-import {AppRouter} from "~/server/api/root";
-
-type RouterOutput = inferRouterOutputs<AppRouter>;
-
-export type ShopType = RouterOutput["products"]["getShops"][0];
+import SimpleMap from "~/components/Map";
 
 const Cart = () => {
     const {cartItems, removeItem, clearCart} = useCartStore();
-    const shops = api.products.getShops.useQuery();
-
 
     const {mutate, isLoading, isError} = api.orders.create.useMutation({
         onSuccess: () => {
@@ -63,35 +54,10 @@ const Cart = () => {
     const [phone, setPhone] = React.useState('')
     const [address, setAddress] = React.useState('')
 
-
-    const [lng, setLng] = React.useState(30.5238);
-    const [lat, setLat] = React.useState(50.45466);
-
-    console.log(shops.data)
     return (
         <div className="flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
             <NavBar/>
-                <Map
-                    mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-                    zoom={2}
-                    style={{
-                        width: "90%",
-                        height: "600px",
-                        borderRadius: "10px",
-                        border: "1px solid #ccc"
-                    }}
-                    initialViewState={{
-                        longitude: 50.422,
-                        latitude: 30.585,
-                    }}
-                    mapStyle={"mapbox://styles/mapbox/streets-v12"}
-                >
-                    {shops.isLoading && <DefaultSkeleton/>}
-                    {shops.data && shops.data?.map((shop: ShopType) => (
-                        <Marker latitude={shop.latitude} longitude={shop.longitude}/>
-                    ))}
-
-                </Map>
+                <SimpleMap/>
 
             <h1 className="m-4 mt-14 text-5xl md:text-6xl lg:text-7xl font-extrabold text-center text-blue-600 dark:text-blue-400">Cart</h1>
 
